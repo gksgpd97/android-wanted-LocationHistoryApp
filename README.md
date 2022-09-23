@@ -1,12 +1,3 @@
-- LocationRequest에서 주기적으로 위치 갱신
-- FusedLocationProviderClient 이용하여 현 위치값 얻기
-### 현 위치 주소 변환
-<img width="811" alt="스크린샷 2022-09-23 오전 10 28 09" src="https://user-images.githubusercontent.com/39490416/191877266-4cc66933-37cf-45e4-9797-17ee51a9e329.png">
-- GeoCoder를 이용하여 현 위치를 주소로 변환
-<img width="769" alt="스크린샷 2022-09-23 오전 10 15 13" src="https://user-images.githubusercontent.com/39490416/191876572-122e0970-9c03-401a-9ef0-004be76f669c.png">
-<img width="200" alt="스크린샷 2022-09-23 오전 9 36 46" src="https://user-images.githubusercontent.com/39490416/191876560-df5bbf79-f80c-4374-981a-520e68a81cca.png">
-<img width="200" alt="스크린샷 2022-09-23 오전 9 33 48" src="https://user-images.githubusercontent.com/39490416/191876561-8281d838-a7b3-47a7-99c1-bc00fdc01253.png">
-<img width="200" alt="스크린샷 2022-09-23 오전 9 41 18" src="https://user-images.githubusercontent.com/39490416/191876562-6130165a-c1b0-4660-ab6e-20634f18c824.png">
 # Team-4 : [1주차 과제] 위치정보를 표시할 수 있는 안드로이드 앱 개발
 
 <br>
