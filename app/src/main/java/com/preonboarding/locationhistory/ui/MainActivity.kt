@@ -11,6 +11,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -57,6 +58,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var locationRequest: LocationRequest
     private lateinit var location: Location
     private var saveInterval = 60000L
+    private var timer : Timer? = null
 
     private val permissionLocationLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
@@ -80,7 +82,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 setCurrentLocation(location, markerTitle, markerSnippet)
                 mCurrentLocation = location
 
-                timerSaveLatLng(location.latitude, location.longitude)
             }
         }
     }
@@ -96,6 +97,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         lifecycleScope.launch(Dispatchers.IO) {
             viewModel.findDistinctByDistance()
         }
+        saveTimerLatLng()
+
     }
 
     private fun observeViewModel() {
@@ -111,7 +114,12 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             it.consume()
         }
         viewModel.saveInterval.observe(this) {
-            saveInterval = it * 60000L
+            timer?.cancel()
+            saveInterval = it * 60000
+            saveTimerLatLng()
+
+
+
         }
 
         viewModel.historyList.observe(this) {
@@ -122,9 +130,17 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun timerSaveLatLng(latitude: Double, longitude: Double) {
-        timer(period = saveInterval) {
-            viewModel.insertHistory(latitude, longitude)
+
+    private fun saveTimerLatLng() {
+
+        timer = timer(period = saveInterval) {
+            runOnUiThread {
+                checkPermission()
+                mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this@MainActivity)
+                mFusedLocationClient.lastLocation.addOnSuccessListener {
+                    viewModel.insertHistory(it.latitude, it.longitude)
+                }
+            }
         }
     }
 
@@ -346,6 +362,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         currentMarker = map.addMarker(markerOptions)
         val cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng)
         map.moveCamera(cameraUpdate)
+
+
     }
 
     private fun setDefaultLocation() {
