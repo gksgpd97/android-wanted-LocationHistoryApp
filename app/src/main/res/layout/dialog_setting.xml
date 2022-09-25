@@ -45,6 +45,7 @@
             android:layout_width="80dp"
             android:layout_height="35dp"
             android:layout_marginTop="10sp"
+            android:text="@{viewModel.saveInterval.toString()}"
             android:background="@drawable/dialog_setting_background_time"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="@+id/textView_setting_storageIntervalText"
