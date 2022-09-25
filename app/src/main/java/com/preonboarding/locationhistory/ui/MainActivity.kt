@@ -368,6 +368,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun setDefaultLocation() {
         val defaultLocation = LatLng(DEFAULT_LATITUDE, DEFAULT_LONGITUDE)
+        viewModel.showCurrentAddress(getCurrentAddress(LatLng(DEFAULT_LATITUDE, DEFAULT_LONGITUDE)))
         currentMarker?.remove()
         val markerOptions = MarkerOptions()
         markerOptions.position(defaultLocation)
