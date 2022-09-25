@@ -40,7 +40,7 @@ class MainViewModel @Inject constructor(
     val currentAddress: LiveData<String>
         get() = _currentAddress
 
-    private val _saveInterval = MutableLiveData<Long>(60000L)
+    private val _saveInterval = MutableLiveData<Long>()
     val saveInterval: LiveData<Long>
         get() = _saveInterval
 
